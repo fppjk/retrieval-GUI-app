@@ -15,17 +15,19 @@
 COCO 数据集支持： 使用真实的 COCO 2017 数据集进行演示，更贴近实际应用场景。
 
 ## 3. 项目结构
+```
 .
 ├── main.py                 # 项目主程序，负责流程调度和用户交互
 ├── model_handler.py        # 封装了 CLIP 模型的加载和编码逻辑
 ├── data_preparer.py        # 负责 COCO 数据集的加载和处理
 ├── retriever_config.py     # 存放所有项目配置，如模型名、数据路径等
 └── README.md
+```
 ## 4. 环境配置
 本项目需要 Python 3.6+ 环境。请使用以下命令安装所有依赖库：
-
+```
 pip install torch torchvision torchaudio transformers pillow matplotlib
-
+```
 
 ## 5. 数据集准备
 本项目使用 COCO 2017 数据集进行演示。你需要下载以下两个文件（也可以不用这个，不用的话改一下代码就好了）：
@@ -38,9 +40,9 @@ pip install torch torchvision torchaudio transformers pillow matplotlib
 
 ## 6. 如何运行
 在配置好环境和数据后，只需在终端中运行主程序：
-
+```
 python main.py
-
+```
 程序启动后，会提示你输入文本查询。
 \
 首次运行： 程序将自动从网络下载 CLIP 模型权重，这可能需要一些时间（约几百 MB）。下载一次后，模型会缓存到本地，下次运行会快很多。
