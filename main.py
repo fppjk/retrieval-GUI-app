@@ -1,11 +1,21 @@
 # 本文件为程序入口，负责调用项目内的所有模块，组织程序的流程。
 import torch
 import matplotlib.pyplot as plt
-from retriever_config import MODEL_NAME, COCO_DATA_ROOT, COCO_IMAGES_DIR, COCO_CAPTIONS_FILE, MAX_IMAGES_TO_PROCESS
 from data_preparer import prepare_coco_data
-from model_handler import CLIPHandler
+# from model_handler import CLIPHandler
 import os
 from PIL import Image
+import sys
+import importlib
+
+from retriever_config import (
+    MODEL_NAME, 
+    COCO_DATA_ROOT, 
+    COCO_IMAGES_DIR, 
+    COCO_CAPTIONS_FILE, 
+    MAX_IMAGES_TO_PROCESS,
+    MODEL_HANDLER_CLASS
+)
 
 def main():
     """
@@ -22,9 +32,17 @@ def main():
     )
 
     # 2. 加载模型
+    # 动态导入模型处理器类
+    # clip_handler = CLIPHandler(MODEL_NAME)
     try:
-        clip_handler = CLIPHandler(MODEL_NAME)
-        print("模型加载成功。")
+        module = importlib.import_module("model_handler")
+        ModelHandlerClass = getattr(module, MODEL_HANDLER_CLASS)
+        clip_handler = ModelHandlerClass(MODEL_NAME)# 实例化模型处理器
+        # 原先clip_handler指的是CLIPHandler，现在可以是任何继承自BaseModelHandler的类
+    except (ImportError, AttributeError) as e:
+        print(f"错误: 无法加载模型处理类 '{MODEL_HANDLER_CLASS}'。请检查 'model_handler.py' 和 'retriever_config.py'。")
+        print(f"详细信息: {e}")
+        return
     except RuntimeError as e:
         print(f"错误: {e}")
         return

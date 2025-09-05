@@ -23,3 +23,7 @@ COCO_CAPTIONS_FILE = "annotations/captions_val2017.json"
 
 # 限制处理的图片数量，设置为 None 则处理所有图片
 MAX_IMAGES_TO_PROCESS = 100
+
+# 统一的模型处理器
+# 在此处指定要使用的模型处理器类
+MODEL_HANDLER_CLASS = 'CLIPModelHandler'
